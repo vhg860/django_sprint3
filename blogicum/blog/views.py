@@ -9,13 +9,13 @@ def output_published(posts_object):
         posts_object.filter(
             is_published=True, category__is_published=True,
             pub_date__date__lte=timezone.now())
-            )
+    )
 
 
 def index(request):
     return render(request, 'blog/index.html', {
         'post_list': output_published(Post.objects.all(),)[:5], }
-        )
+    )
 
 
 def post_detail(request, post_id):
