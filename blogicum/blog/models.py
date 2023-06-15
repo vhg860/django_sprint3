@@ -27,8 +27,10 @@ class Category(BaseModel):
     description = models.TextField('Описание')
     slug = models.SlugField(
         'Идентификатор',
-        help_text=('Идентификатор страницы для URL;\
- разрешены символы латиницы, цифры, дефис и подчёркивание.'),
+        help_text=(
+            'Идентификатор страницы для URL; '
+            'разрешены символы латиницы, цифры, дефис и подчёркивание.'
+            ),
         unique=True
     )
 
@@ -62,13 +64,14 @@ class Post(BaseModel):
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
         'Дата и время публикации',
-        help_text=('Если установить дату и время в будущем — можно делать\
- отложенные публикации.')
+        help_text=(
+            'Если установить дату и время в будущем — можно делать '
+            'отложенные публикации.'
+        )
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='author',
         verbose_name='Автор публикации',
     )
     location = models.ForeignKey(
