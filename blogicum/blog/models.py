@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+TEXT_RESTRICTION = 20
 User = get_user_model()
 
 
@@ -26,8 +27,8 @@ class Category(BaseModel):
     description = models.TextField('Описание')
     slug = models.SlugField(
         'Идентификатор',
-        help_text='Идентификатор страницы для URL; '
-                  'разрешены символы латиницы, цифры, дефис и подчёркивание.',
+        help_text=('Идентификатор страницы для URL;\
+ разрешены символы латиницы, цифры, дефис и подчёркивание.'),
         unique=True
     )
 
@@ -36,7 +37,7 @@ class Category(BaseModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return f'{self.title[:20]}'
+        return self.title[:TEXT_RESTRICTION]
 
 
 class Location(BaseModel):
@@ -50,7 +51,7 @@ class Location(BaseModel):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return f'{self.name[:20]}'
+        return self.name[:TEXT_RESTRICTION]
 
 
 class Post(BaseModel):
@@ -61,13 +62,13 @@ class Post(BaseModel):
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
         'Дата и время публикации',
-        help_text='Если установить дату и время в будущем — можно делать'
-        ' отложенные публикации.'
+        help_text=('Если установить дату и время в будущем — можно делать\
+ отложенные публикации.')
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='+',
+        related_name='author',
         verbose_name='Автор публикации',
     )
     location = models.ForeignKey(
@@ -91,4 +92,4 @@ class Post(BaseModel):
         default_related_name = 'posts'
 
     def __str__(self):
-        return f'{self.title[:20]}'
+        return self.title[:TEXT_RESTRICTION]
